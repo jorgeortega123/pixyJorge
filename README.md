@@ -224,3 +224,5 @@ We welcome contributions! Please:
 ---
 
 **Built by [Mark Fulton](https://markfulton.com)** | **Powered by Gemini 2.5 Flash Image** | **Made with Bolt.new**
+#   p i x y J o r g e  
+ 
