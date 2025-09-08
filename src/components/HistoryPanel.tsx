@@ -55,7 +55,7 @@ export const HistoryPanel: React.FC = () => {
         <button
           onClick={() => setShowHistory(true)}
           className="w-6 h-16 bg-gray-800 hover:bg-gray-700 rounded-l-lg border border-r-0 border-gray-700 flex items-center justify-center transition-colors group"
-          title="Show History Panel"
+          title="Mostrar Panel de Historial"
         >
           <div className="flex flex-col space-y-1">
             <div className="w-1 h-1 bg-gray-500 group-hover:bg-gray-400 rounded-full"></div>
@@ -73,14 +73,14 @@ export const HistoryPanel: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">
           <History className="h-5 w-5 text-gray-400" />
-          <h3 className="text-sm font-medium text-gray-300">History & Variants</h3>
+          <h3 className="text-sm font-medium text-gray-300">Historial y Variantes</h3>
         </div>
         <Button
           variant="ghost"
           size="icon"
           onClick={() => setShowHistory(!showHistory)}
           className="h-6 w-6"
-          title="Hide History Panel"
+          title="Ocultar Panel de Historial"
         >
           ×
         </Button>
@@ -88,11 +88,11 @@ export const HistoryPanel: React.FC = () => {
 
       {/* Variants Grid */}
       <div className="mb-6 flex-shrink-0">
-        <h4 className="text-xs font-medium text-gray-400 mb-3">Current Variants</h4>
+        <h4 className="text-xs font-medium text-gray-400 mb-3">Variantes Actuales</h4>
         {generations.length === 0 && edits.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-4xl mb-2">🖼️</div>
-            <p className="text-sm text-gray-500">No generations yet</p>
+            <p className="text-sm text-gray-500">Aún no hay generaciones</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
@@ -166,7 +166,7 @@ export const HistoryPanel: React.FC = () => {
                 
                 {/* Edit Label */}
                 <div className="absolute top-2 left-2 bg-purple-900/80 text-xs px-2 py-1 rounded">
-                  Edit #{index + 1}
+                  Edición #{index + 1}
                 </div>
               </div>
             ))}
@@ -177,25 +177,25 @@ export const HistoryPanel: React.FC = () => {
       {/* Current Image Info */}
       {(canvasImage || imageDimensions) && (
         <div className="mb-4 p-3 bg-gray-900 rounded-lg border border-gray-700">
-          <h4 className="text-xs font-medium text-gray-400 mb-2">Current Image</h4>
+          <h4 className="text-xs font-medium text-gray-400 mb-2">Imagen Actual</h4>
           <div className="space-y-1 text-xs text-gray-500">
             {imageDimensions && (
               <div className="flex justify-between">
-                <span>Dimensions:</span>
+                <span>Dimensiones:</span>
                 <span className="text-gray-300">{imageDimensions.width} × {imageDimensions.height}</span>
               </div>
             )}
             <div className="flex justify-between">
-              <span>Mode:</span>
+              <span>Modo:</span>
               <span className="text-gray-300 capitalize">{selectedTool}</span>
             </div>
           </div>
         </div>
       )}
 
-      {/* Generation Details */}
+      {/* Detalles de Generación */}
       <div className="mb-6 p-4 bg-gray-900 rounded-lg border border-gray-700 flex-1 overflow-y-auto min-h-0">
-        <h4 className="text-xs font-medium text-gray-400 mb-2">Generation Details</h4>
+        <h4 className="text-xs font-medium text-gray-400 mb-2">Detalles de Generación</h4>
         {(() => {
           const gen = generations.find(g => g.id === selectedGenerationId);
           const selectedEdit = edits.find(e => e.id === selectedEditId);
@@ -203,27 +203,27 @@ export const HistoryPanel: React.FC = () => {
           if (gen) {
             return (
               <div className="space-y-3">
-                <div className="space-y-2 text-xs text-gray-500">
+                  <div className="space-y-2 text-xs text-gray-500">
                   <div>
                     <span className="text-gray-400">Prompt:</span>
                     <p className="text-gray-300 mt-1">{gen.prompt}</p>
                   </div>
                   <div className="flex justify-between">
-                    <span>Model:</span>
+                    <span>Modelo:</span>
                     <span>{gen.modelVersion}</span>
                   </div>
                   {gen.parameters.seed && (
                     <div className="flex justify-between">
-                      <span>Seed:</span>
+                      <span>Semilla:</span>
                       <span>{gen.parameters.seed}</span>
                     </div>
                   )}
                 </div>
                 
-                {/* Reference Images */}
+                {/* Imágenes de Referencia */}
                 {gen.sourceAssets.length > 0 && (
                   <div>
-                    <h5 className="text-xs font-medium text-gray-400 mb-2">Reference Images</h5>
+                    <h5 className="text-xs font-medium text-gray-400 mb-2">Imágenes de Referencia</h5>
                     <div className="grid grid-cols-2 gap-2">
                       {gen.sourceAssets.map((asset, index) => (
                         <button
@@ -260,29 +260,29 @@ export const HistoryPanel: React.FC = () => {
               <div className="space-y-3">
                 <div className="space-y-2 text-xs text-gray-500">
                   <div>
-                    <span className="text-gray-400">Edit Instruction:</span>
+                    <span className="text-gray-400">Instrucción de Edición:</span>
                     <p className="text-gray-300 mt-1">{selectedEdit.instruction}</p>
                   </div>
                   <div className="flex justify-between">
-                    <span>Type:</span>
-                    <span>Image Edit</span>
+                    <span>Tipo:</span>
+                    <span>Edición de Imagen</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Created:</span>
+                    <span>Creado:</span>
                     <span>{new Date(selectedEdit.timestamp).toLocaleTimeString()}</span>
                   </div>
                   {selectedEdit.maskAssetId && (
                     <div className="flex justify-between">
-                      <span>Mask:</span>
-                      <span className="text-purple-400">Applied</span>
+                      <span>Máscara:</span>
+                      <span className="text-purple-400">Aplicada</span>
                     </div>
                   )}
                 </div>
                 
-                {/* Parent Generation Reference */}
+                {/* Referencia de Generación Padre */}
                 {parentGen && (
                   <div>
-                    <h5 className="text-xs font-medium text-gray-400 mb-2">Original Image</h5>
+                    <h5 className="text-xs font-medium text-gray-400 mb-2">Imagen Original</h5>
                     <button
                       onClick={() => setPreviewModal({
                         open: true,
@@ -304,10 +304,10 @@ export const HistoryPanel: React.FC = () => {
                   </div>
                 )}
                 
-                {/* Mask Visualization */}
+                {/* Visualización de Máscara */}
                 {selectedEdit.maskReferenceAsset && (
                   <div>
-                    <h5 className="text-xs font-medium text-gray-400 mb-2">Masked Reference</h5>
+                    <h5 className="text-xs font-medium text-gray-400 mb-2">Referencia con Máscara</h5>
                     <button
                       onClick={() => setPreviewModal({
                         open: true,
@@ -326,7 +326,7 @@ export const HistoryPanel: React.FC = () => {
                         <ImageIcon className="h-3 w-3 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                       <div className="absolute bottom-1 left-1 bg-purple-900/80 text-xs px-1 py-0.5 rounded text-purple-300">
-                        Mask
+                        Máscara
                       </div>
                     </button>
                   </div>
@@ -336,7 +336,7 @@ export const HistoryPanel: React.FC = () => {
           } else {
             return (
               <div className="space-y-2 text-xs text-gray-500">
-                <p className="text-gray-400">Select a generation or edit to view details</p>
+                <p className="text-gray-400">Selecciona una generación o edición para ver detalles</p>
               </div>
             );
           }
@@ -391,7 +391,7 @@ export const HistoryPanel: React.FC = () => {
           disabled={!selectedGenerationId && !useAppStore.getState().canvasImage}
         >
           <Download className="h-4 w-4 mr-2" />
-          Download
+          Descargar
         </Button>
       </div>
       
