@@ -1,5 +1,13 @@
 import { GoogleGenAI } from '@google/genai';
 
+// Note: In production, this should be handled via a backend proxy
+const getApiKey = (): string => {
+  const storedKey = localStorage.getItem('gemini_api_key');
+  return storedKey || import.meta.env.VITE_GEMINI_API_KEY || 'demo-key';
+};
+
+const genAI = new GoogleGenAI({ apiKey: getApiKey() });
+
 export interface GenerationRequest {
   prompt: string;
   referenceImages?: string[]; // base64 array
@@ -22,12 +30,6 @@ export interface SegmentationRequest {
 }
 
 export class GeminiService {
-  private genAI: GoogleGenAI;
-
-  constructor(apiKey: string) {
-    this.genAI = new GoogleGenAI({ apiKey });
-  }
-
   async generateImage(request: GenerationRequest): Promise<string[]> {
     try {
       const contents: any[] = [{ text: request.prompt }];
@@ -44,7 +46,7 @@ export class GeminiService {
         });
       }
 
-      const response = await this.genAI.models.generateContent({
+      const response = await genAI.models.generateContent({
         model: "gemini-2.5-flash-image-preview",
         contents,
       });
@@ -97,7 +99,7 @@ export class GeminiService {
         });
       }
 
-      const response = await this.genAI.models.generateContent({
+      const response = await genAI.models.generateContent({
         model: "gemini-2.5-flash-image-preview",
         contents,
       });
@@ -142,7 +144,7 @@ Only segment the specific object or region requested. The mask should be a binar
         },
       ];
 
-      const response = await this.genAI.models.generateContent({
+      const response = await genAI.models.generateContent({
         model: "gemini-2.5-flash-image-preview",
         contents: prompt,
       });
@@ -168,5 +170,4 @@ Preserve image quality and ensure the edit looks professional and realistic.`;
   }
 }
 
-// Factory function for Cloudflare Workers
-export const createGeminiService = (apiKey: string) => new GeminiService(apiKey);
+export const geminiService = new GeminiService();

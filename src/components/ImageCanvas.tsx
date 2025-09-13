@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Stage, Layer, Image as KonvaImage, Line } from 'react-konva';
 import { useAppStore } from '../store/useAppStore';
 import { Button } from './ui/Button';
-import { ZoomIn, ZoomOut, RotateCcw, Download, Eye, EyeOff, Eraser } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, Download, Eye, EyeOff, Eraser, AlertTriangle, Key } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 export const ImageCanvas: React.FC = () => {
@@ -28,6 +28,21 @@ export const ImageCanvas: React.FC = () => {
   const [stageSize, setStageSize] = useState({ width: 800, height: 600 });
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentStroke, setCurrentStroke] = useState<number[]>([]);
+  const [hasApiKey, setHasApiKey] = useState(false);
+
+  // Check for API key
+  useEffect(() => {
+    const checkApiKey = () => {
+      const apiKey = localStorage.getItem('gemini_api_key');
+      setHasApiKey(!!apiKey);
+    };
+
+    checkApiKey();
+    
+    // Listen for storage changes
+    window.addEventListener('storage', checkApiKey);
+    return () => window.removeEventListener('storage', checkApiKey);
+  }, []);
 
   // Load image and auto-fit when canvasImage changes
   useEffect(() => {
@@ -245,7 +260,27 @@ export const ImageCanvas: React.FC = () => {
         id="canvas-container" 
         className="flex-1 relative overflow-hidden bg-gray-800"
       >
-        {!image && !isGenerating && (
+        {!image && !isGenerating && !hasApiKey && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center max-w-md mx-auto p-6">
+              <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 mb-4">
+                <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
+                <h2 className="text-lg font-medium text-red-300 mb-2">
+                  API Key Requerida
+                </h2>
+                <p className="text-red-200/80 mb-4">
+                  Para usar PixJorge Editor necesitas configurar tu API key de Google Gemini.
+                </p>
+                <div className="flex items-center justify-center text-sm text-red-200/60">
+                  <Key className="h-4 w-4 mr-2" />
+                  Busca el botón "Configurar API Key" en la esquina superior derecha
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!image && !isGenerating && hasApiKey && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <div className="text-6xl mb-4">🍌</div>
@@ -349,7 +384,16 @@ export const ImageCanvas: React.FC = () => {
           
           <div className="flex items-center space-x-2">
             <span className="text-xs text-gray-500">
-              © 2025 Jorge Ortega - 
+              © 2025 
+              <a
+                href="https://jorgeortega.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-yellow-400 hover:text-yellow-300 transition-colors ml-1"
+              >
+                Jorge Ortega
+              </a>
+               - 
               <a
                 href="https://www.reinventing.ai/"
                 target="_blank"

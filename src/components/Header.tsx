@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/Button";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, Key } from "lucide-react";
 import { InfoModal } from "./InfoModal";
+import { ApiKeyModal } from "./ApiKeyModal";
 
 export const Header: React.FC = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(false);
+
+  useEffect(() => {
+    const checkApiKey = () => {
+      const apiKey = localStorage.getItem('gemini_api_key');
+      setHasApiKey(!!apiKey);
+    };
+
+    checkApiKey();
+    
+    // Listen for storage changes
+    window.addEventListener('storage', checkApiKey);
+    return () => window.removeEventListener('storage', checkApiKey);
+  }, []);
 
   return (
     <>
@@ -32,6 +48,17 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-2">
+          {!hasApiKey && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowApiKeyModal(true)}
+              className="text-yellow-400 hover:text-yellow-300 border-yellow-400/50 hover:border-yellow-300/50"
+            >
+              <Key className="h-4 w-4 mr-2" />
+              Configurar API Key
+            </Button>
+          )}
           <Button
             variant="ghost"
             size="icon"
@@ -43,6 +70,14 @@ export const Header: React.FC = () => {
       </header>
 
       <InfoModal open={showInfoModal} onOpenChange={setShowInfoModal} />
+      <ApiKeyModal
+        open={showApiKeyModal}
+        onOpenChange={setShowApiKeyModal}
+        onApiKeySaved={() => {
+          setHasApiKey(true);
+          setShowApiKeyModal(false);
+        }}
+      />
     </>
   );
 };

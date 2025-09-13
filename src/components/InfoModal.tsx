@@ -28,11 +28,33 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onOpenChange }) => {
           <div className="space-y-4">
             <div className="space-y-3 text-sm text-gray-300">
               <p>
-                Desarrollado por{" "}
-                <span className="text-yellow-400 font-semibold">
+                Desarrollado con mucho cariño por{" "}
+                <a
+                  href="https://jorgeortega.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yellow-400 font-semibold hover:text-yellow-300 transition-colors"
+                >
                   Jorge Ortega
-                </span>
+                </a>
               </p>
+              
+              <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+                <p className="mb-3">
+                  ¡Hola! Soy Jorge, un desarrollador apasionado por crear herramientas útiles y accesibles. 
+                  Este editor de imágenes con IA es uno de mis proyectos favoritos, desarrollado con el objetivo 
+                  de democratizar el acceso a la creatividad digital.
+                </p>
+                <p className="mb-3">
+                  Como muchos de mis proyectos, PixJorge Editor nace de la necesidad de simplificar procesos 
+                  complejos y hacerlos accesibles para todos. Cada línea de código está escrita con dedicación 
+                  y pensando en ofrecer la mejor experiencia posible.
+                </p>
+                <p className="text-yellow-400/80 font-medium">
+                  💡 Este es solo uno de los muchos proyectos que comparto con la comunidad. 
+                  ¡Espero que te sea útil y lo disfrutes tanto como yo disfruté creándolo!
+                </p>
+              </div>
 
               {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-4 bg-gradient-to-br from-purple-900/30 to-indigo-900/30 rounded-lg border border-purple-500/30">
