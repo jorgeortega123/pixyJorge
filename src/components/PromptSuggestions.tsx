@@ -7,26 +7,33 @@ interface PromptSuggestionsProps {
 }
 
 const DEFAULT_PROMPTS = [
-  "Un sereno paisaje montañoso al atardecer con un lago cristalino reflejando el cielo dorado",
+  // Estilo Fotorrealista/Hiperrealista (5)
   "Retrato fotorrealista de una mujer joven con cabello ondulado y ojos expresivos, iluminación cinematográfica",
-  "Gato naranja durmiendo en una ventana soleada con plantas verdes alrededor, estilo acuarela suave",
-  "Ciudad futurista con rascacielos brillantes y coches voladores, estilo cyberpunk neón",
-  "Bosque encantado con árboles antiguos, hongos luminosos y mariposas mágicas flotando",
-  "Playa tropical paradisíaca con palmeras, arena blanca y agua turquesa cristalina",
-  "Astronauta explorando un planeta alienígena con dos lunas en el cielo violeta",
-  "Café acogedor de París con mesas al aire libre, croissants y flores en las ventanas",
-  "Dragón majestuoso volando sobre un castillo medieval en las montañas nevadas",
-  "Jardín japonés zen con puente de bambú, koi nadando y flores de cerezo cayendo",
-  "Robot humanoide amigable trabajando en un laboratorio lleno de tecnología avanzada",
-  "Casa de campo inglesa con jardín de rosas, chimenea humeante y cielo nublado",
-  "Ballena jorobada saltando del océano azul profundo con rayos de sol atravesando el agua",
-  "Mercado colorido marroquí con especias, telas vibrantes y arquitectura tradicional",
-  "Tren de vapor vintage cruzando un puente de piedra sobre un valle verde exuberante",
-  "Biblioteca antigua con estanterías altas, escaleras de madera y luz dorada filtrándose",
-  "Águila dorada volando sobre cañones rocosos con formaciones geológicas dramáticas",
-  "Festival de linternas nocturno con miles de luces flotando en el cielo estrellado",
-  "Cocina rústica italiana con pasta fresca, tomates maduros y hierbas aromáticas",
-  "Aurora boreal bailando sobre un bosque de pinos cubiertos de nieve brillante"
+  "Paisaje montañoso al atardecer con lago cristalino reflejando el cielo dorado, fotografía profesional",
+  "Gato persa blanco durmiendo en una ventana soleada, fotografía macro con bokeh suave",
+  "Astronauta caminando en la superficie de Marte, fotografía espacial hiperrealista",
+  "Café parisino con croissants y flores, fotografía lifestyle con luz natural dorada",
+
+  // Estilo Cartoon/Animado (5)
+  "Dragón amigable de colores brillantes volando sobre un castillo de caricatura, estilo Pixar",
+  "Perro golden retriever sonriente con gafas de sol, ilustración cartoon colorida y divertida",
+  "Villa encantada con hongos gigantes y flores parlantes, estilo Disney animado",
+  "Robot simpático ayudando en una cocina futurista, diseño cartoon 3D adorable",
+  "Familia de pandas comiendo bambú en un bosque cartoon, colores vibrantes y tiernos",
+
+  // Estilo Artístico/Pintura (5)
+  "Jardín japonés zen con puente de bambú y flores de cerezo, estilo acuarela delicada",
+  "Bailarina en movimiento con vestido fluido, pintura al óleo impresionista vibrante",
+  "Bodegón con frutas tropicales y flores exóticas, estilo pintura renacentista clásica",
+  "Velero navegando en aguas turquesas al atardecer, técnica de pintura marina romántica",
+  "Campo de girasoles bajo cielo estrellado, estilo Van Gogh con pinceladas expresivas",
+
+  // Estilo Fantasía/Sci-Fi (5)
+  "Portal mágico dimensional con energía violeta en bosque místico, arte conceptual épico",
+  "Ciudad flotante en las nubes con cascadas infinitas, arquitectura fantástica futurista",
+  "Criatura bioluminiscente nadando en océano alien, arte digital de ciencia ficción",
+  "Biblioteca mágica con libros flotantes y escaleras imposibles, fantasía arquitectónica",
+  "Mago anciano conjurando galaxias con bastón cristalino, arte fantástico místico épico"
 ];
 
 export const PromptSuggestions: React.FC<PromptSuggestionsProps> = ({
