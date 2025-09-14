@@ -38,10 +38,18 @@ export const ImageCanvas: React.FC = () => {
     };
 
     checkApiKey();
-    
-    // Listen for storage changes
+
+    // Listen for storage changes (from other tabs/windows)
     window.addEventListener('storage', checkApiKey);
-    return () => window.removeEventListener('storage', checkApiKey);
+
+    // Listen for custom event for same-tab changes
+    const handleApiKeyChange = () => checkApiKey();
+    window.addEventListener('apiKeyChanged', handleApiKeyChange);
+
+    return () => {
+      window.removeEventListener('storage', checkApiKey);
+      window.removeEventListener('apiKeyChanged', handleApiKeyChange);
+    };
   }, []);
 
   // Load image and auto-fit when canvasImage changes

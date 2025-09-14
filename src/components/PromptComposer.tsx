@@ -6,6 +6,7 @@ import { useImageGeneration, useImageEditing } from '../hooks/useImageGeneration
 import { Upload, Wand2, Edit3, MousePointer, HelpCircle, ChevronDown, ChevronRight, RotateCcw } from 'lucide-react';
 import { blobToBase64 } from '../utils/imageUtils';
 import { PromptHints } from './PromptHints';
+import { PromptSuggestions } from './PromptSuggestions';
 import { cn } from '../utils/cn';
 
 export const PromptComposer: React.FC = () => {
@@ -271,8 +272,14 @@ export const PromptComposer: React.FC = () => {
              currentPrompt.length < 50 ? 'Buen nivel de detalle' : 'Detalle de prompt excelente'}
           </span>
         </button>
-      </div>
 
+        {/* Prompt Suggestions */}
+        {selectedTool === 'generate' && (
+          <div className="mt-4">
+            <PromptSuggestions onPromptSelect={setCurrentPrompt} />
+          </div>
+        )}
+      </div>
 
       {/* Generate Button */}
       <Button

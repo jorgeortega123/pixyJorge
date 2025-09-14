@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, Key } from "lucide-react";
 import { Button } from "./ui/Button";
@@ -9,20 +9,34 @@ interface ApiKeyModalProps {
   onApiKeySaved: () => void;
 }
 
-export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ 
-  open, 
-  onOpenChange, 
-  onApiKeySaved 
+export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
+  open,
+  onOpenChange,
+  onApiKeySaved
 }) => {
   const [apiKey, setApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [tokenFromUrl, setTokenFromUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      setTokenFromUrl(token);
+      setApiKey(token);
+    }
+  }, []);
 
   const handleSave = async () => {
     if (!apiKey.trim()) return;
-    
+
     setIsLoading(true);
     try {
       localStorage.setItem('gemini_api_key', apiKey.trim());
+
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new Event('apiKeyChanged'));
+
       onApiKeySaved();
       onOpenChange(false);
     } catch (error) {
@@ -87,6 +101,11 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
                 className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 autoFocus
               />
+              {tokenFromUrl && (
+                <p className="text-sm text-green-400 bg-green-900/20 border border-green-700 rounded-lg px-3 py-2 mt-2">
+                  Jorge Ortega te ha regalado un código para usar la app, úsala con responsabilidad
+                </p>
+              )}
             </div>
 
             <div className="flex justify-end space-x-2 pt-2">

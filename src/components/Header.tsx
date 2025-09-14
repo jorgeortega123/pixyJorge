@@ -12,11 +12,17 @@ export const Header: React.FC = () => {
   useEffect(() => {
     const checkApiKey = () => {
       const apiKey = localStorage.getItem('gemini_api_key');
-      setHasApiKey(!!apiKey);
+      const hasKey = !!apiKey;
+      setHasApiKey(hasKey);
+
+      // Auto-open modal if no API key exists
+      if (!hasKey) {
+        setShowApiKeyModal(true);
+      }
     };
 
     checkApiKey();
-    
+
     // Listen for storage changes
     window.addEventListener('storage', checkApiKey);
     return () => window.removeEventListener('storage', checkApiKey);
